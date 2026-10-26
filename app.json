@@ -1,25 +1,50 @@
 {
   "expo": {
     "name": "LocationReminder",
-    "slug": "LocationReminder",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "slug": "location-reminder",
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Needed to remind you when you arrive at a place.",
+          "isAndroidBackgroundLocationEnabled": true
+        }
+      ],
+      "expo-notifications"
+    ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.yourname.locationreminder",
+      "config": {
+        "googleMapsApiKey": "AIzaSyDc3MEF_mK6xMxkpmTqngcttd1XEbVZoYk"
+      },
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "location"
+        ]
+      }
     },
     "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+      "package": "com.yourname.locationreminder",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDc3MEF_mK6xMxkpmTqngcttd1XEbVZoYk"
+        }
       },
-      "predictiveBackGestureEnabled": false
+      "permissions": [
+        "ACCESS_BACKGROUND_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_BACKGROUND_LOCATION",
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_LOCATION",
+        "android.permission.POST_NOTIFICATIONS"
+      ]
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "extra": {
+      "eas": {
+        "projectId": "f4d0c26b-a7c8-4f37-9992-d3a747f66139"
+      }
     }
   }
 }
