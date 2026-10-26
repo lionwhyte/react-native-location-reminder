@@ -3,11 +3,13 @@ import { Modal, View, Text, ScrollView, Pressable, StyleSheet } from 'react-nati
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getLogs, clearLogs } from '../services/geofenceService';
 
+// Komponenta za prikaz debug logova geofence eventova, koristi se za testiranje i praćenje geofence funkcionalnosti
 export default function DebugLog({ visible, onClose }: { visible: boolean; onClose: () => void }) {
   const [logs, setLogs] = useState<string[]>([]);
   const insets = useSafeAreaInsets();
   const load = useCallback(async () => setLogs(await getLogs()), []);
 
+  // učitavanje logova svaki put kada se modal otvori
   useEffect(() => { if (visible) load(); }, [visible, load]);
 
   return (

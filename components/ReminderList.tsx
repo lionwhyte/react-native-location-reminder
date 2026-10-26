@@ -19,6 +19,7 @@ type Props = {
 
 const formatRadius = (r: number) => (r >= 1000 ? `${r / 1000} km` : `${r} m`);
 
+// Komponenta za prikaz liste podsjetnika, omogućuje pregled, aktiviranje/deaktiviranje i brisanje podsjetnika, te odabir podsjetnika za prikaz na mapi
 export default function ReminderList({ reminders, onToggle, onDelete, onSelect }: Props) {
   const insets = useSafeAreaInsets();
 
@@ -29,7 +30,7 @@ export default function ReminderList({ reminders, onToggle, onDelete, onSelect }
     ]);
   };
 
-  // Newest first
+  // prvi element u listi je zadnji dodani podsjetnik, zato se lista reverzira da bi se prikazali najnoviji podsjetnici na vrhu
   const data = [...reminders].reverse();
 
   return (

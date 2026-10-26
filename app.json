@@ -10,6 +10,12 @@
           "isAndroidBackgroundLocationEnabled": true
         }
       ],
+      [
+        "expo-build-properties",
+        {
+          "android": { "enableMinifyInReleaseBuilds": false }
+        }
+      ],
       "expo-notifications"
     ],
     "ios": {

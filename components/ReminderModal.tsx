@@ -10,7 +10,7 @@ import {
   Platform,
 } from 'react-native';
 
-const RADIUS_OPTIONS = [100, 200, 500, 1000]; // meters
+const RADIUS_OPTIONS = [100, 200, 500, 1000]; // u metrima
 
 type Props = {
   visible: boolean;
@@ -18,12 +18,13 @@ type Props = {
   onSave: (title: string, note: string, radius: number) => void;
 };
 
+// Komponenta modala za dodavanje novog podsjetnika, prikazuje input polja za naslov, bilješku i odabir radijusa, te dugmad za spremanje ili otkazivanje
 export default function ReminderModal({ visible, onCancel, onSave }: Props) {
   const [title, setTitle] = useState('');
   const [note, setNote] = useState('');
   const [radius, setRadius] = useState(200);
 
-  // Reset the form every time the modal opens
+  // resetiranje stanja modala svaki put kada se modal otvori, postavlja title i note na prazno, a radius na defaultnu vrijednost 200
   useEffect(() => {
     if (visible) {
       setTitle('');
@@ -34,6 +35,7 @@ export default function ReminderModal({ visible, onCancel, onSave }: Props) {
 
   const canSave = title.trim().length > 0;
 
+  // funkcija koja se poziva kada korisnik pritisne dugme za spremanje, provjerava da li je moguće spremiti (naslov nije prazan) i poziva onSave callback sa unesenim podacima
   const handleSave = () => {
     if (!canSave) return;
     onSave(title.trim(), note.trim(), radius);

@@ -9,6 +9,7 @@ import ReminderModal from './components/ReminderModal';
 import ReminderList from './components/ReminderList';
 import DebugLog from './components/DebugLog';
 
+// Postavljanje handlera za notifikacije, kako bi se omogućilo prikazivanje alertova, zvukova i bannera kada se notifikacija primi
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true, shouldPlaySound: true, shouldSetBadge: false,
@@ -16,27 +17,31 @@ Notifications.setNotificationHandler({
   }),
 });
 
-type Tab = 'map' | 'list';
+// union type za tabove, može biti ili 'map' ili 'list'
+type Tab = 'map' | 'list'; 
 
+// Glavna komponenta aplikacije, prikazuje mapu, listu podsjetnika i modal za dodavanje novih podsjetnika
 function Main() {
   const { reminders, add, remove, toggle } = useReminders();
   const [tab, setTab] = useState<Tab>('map');
   const [pending, setPending] = useState<{ latitude: number; longitude: number } | null>(null);
   const mapRef = useRef<MapView>(null);
-  const insets = useSafeAreaInsets();
+  const insets = useSafeAreaInsets(); // dohvaćanje safe area insets kako bi se izbjeglo preklapanje UI elemenata sa status barom ili home indikatorskom trakom
   const [showDebug, setShowDebug] = useState(false);
 
+  // postavljanje notifikacijskog kanala za Android, kako bi se omogućilo prikazivanje notifikacija sa vibracijom i visokom važnosti
   useEffect(() => {
     if (Platform.OS === 'android') {
       Notifications.setNotificationChannelAsync('default', {
         name: 'Podsjetnici',
         importance: Notifications.AndroidImportance.HIGH,
-        vibrationPattern: [0, 250, 250, 250],
+        vibrationPattern: [0, 250, 250, 250], // vibracijski pattern za Android notifikacije, prvo 0ms pauza, zatim 250ms vibracija, 250ms pauza, 250ms vibracija
       });
     }
     requestPermissions();
   }, []);
 
+  // funkcija za prikazivanje odabranog podsjetnika na mapi, postavlja tab na 'map' i animira mapu na lokaciju podsjetnika
   const showOnMap = (r: Reminder) => {
     setTab('map');
     mapRef.current?.animateToRegion(
