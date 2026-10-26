@@ -56,7 +56,7 @@ TaskManager.defineTask(GEOFENCE_TASK, async ({ data, error }) => {
 
   await Notifications.scheduleNotificationAsync({
     content: { title: reminder.title, body: reminder.note ?? 'You are at your reminder location.' },
-    trigger: null,
+    trigger: { channelId: 'default' },
   });
   await appendLog(`obavijest poslana: ${reminder.title}`);
 });
